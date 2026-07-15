@@ -10,6 +10,6 @@ __pycache__/
 storage/uploads/*
 storage/masks/*
 storage/outputs/*
-storage/textures/*
-# Models live in the docker volume / host storage — don't bake into the image.
+# Keep real textures + brand in the image (Railway Volume must NOT mount over all of /app/storage).
+# Models are large — download at runtime onto a Volume at /app/storage/models.
 storage/models/
