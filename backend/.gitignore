@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.db
+.env
+storage/uploads/*
+storage/masks/*
+storage/outputs/*
+storage/models/*
+!storage/**/.gitkeep

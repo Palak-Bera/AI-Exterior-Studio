@@ -1,0 +1,15 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.db
+.env
+.git
+.gitignore
+storage/uploads/*
+storage/masks/*
+storage/outputs/*
+storage/textures/*
+# Models live in the docker volume / host storage — don't bake into the image.
+storage/models/

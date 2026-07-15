@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: ai-exterior-studio-backend
+    container_name: aes-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      PORT: "8000"
+      LOG_LEVEL: INFO
+      DEFAULT_SEGMENTATION_MODEL: grounded_sam
+      GROUNDING_DINO_MODEL: IDEA-Research/grounding-dino-tiny
+      SAM_MODEL: facebook/sam-vit-base
+      MODEL_CACHE_DIR: storage/models
+      CORS_ORIGINS: '["http://localhost:3000","http://127.0.0.1:3000"]'
+    volumes:
+      # Host storage so wall_cadding / wall_tiles / models / uploads stay in sync
+      - ./backend/storage:/app/storage
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the client bundle; the browser calls the backend on the host.
+        NEXT_PUBLIC_API_BASE: http://localhost:8000
+    image: ai-exterior-studio-frontend
+    container_name: aes-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes: {}

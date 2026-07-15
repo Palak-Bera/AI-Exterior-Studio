@@ -1,0 +1,3 @@
+# Keep torch/torchvision on the CPU wheels (blocks CUDA upgrades from timm/accelerate).
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
